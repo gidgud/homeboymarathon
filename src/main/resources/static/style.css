@@ -23,12 +23,12 @@ nav {
     gap: 10px;
 }
 
-nav h2 {
+nav button {
     display: inline-block;
     text-align: center;
 }
 
-nav h2:hover{
+nav button:hover{
     text-shadow: black 0 0 0.5px;
     text-decoration: underline;
     text-underline-offset: 4px;
@@ -53,6 +53,10 @@ h3 {
     font-weight: normal;
     letter-spacing: 3px;
     text-shadow: 1px 1px 15px black;
+}
+
+.hidden {
+	display: none;
 }
 
 .img-container img{

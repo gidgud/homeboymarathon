@@ -1,13 +1,6 @@
+function showPage(name) {
 
-const dataCache = {}
-
-async function showPage(pageId) {
-
-    document.querySelectorAll('.page').forEach(a => a.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-
-    if(pageId === 'event-page' && !dataCache.events) {
-        dataCache.events = await fetchEvents()
-    }
+	document.querySelectorAll('.page').forEach(a => a.classList.add('hidden'));
+	document.getElementById(name).classList.remove('hidden');
 
 }
