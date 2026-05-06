@@ -44,6 +44,7 @@ public class EventService {
 
 		oldEvent.setName(event.getName());
 		oldEvent.setDate(event.getDate());
+		oldEvent.setImagePath(event.getImagePath());
 		oldEvent.setPrice(event.getPrice());
 
 		Event updatedEvent = eventRepository.save(oldEvent);
