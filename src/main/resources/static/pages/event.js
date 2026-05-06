@@ -1,4 +1,34 @@
 
+function initEventPage() {
+
+    const page = document.getElementById("event-page");
+
+    page.innerHTML = `
+    
+    <h2>Events</h2>
+    
+        <table>
+    <thead>
+    
+    <tr>
+        <td>Dato</td>
+        <td>Adresse</td>
+        <td>Rute</td>
+    </tr>
+    
+    </thead>
+    
+    <tbody id="event-body"></tbody>
+    
+</table>
+    
+    `
+
+    fetchEvents()
+
+}
+
+
 
 function renderEvents(eventArray) {
 
@@ -23,6 +53,7 @@ function renderEvents(eventArray) {
 
     )
 
+
 }
 
 async function fetchEvents() {
@@ -34,5 +65,5 @@ async function fetchEvents() {
 
 }
 
-fetchEvents()
+
 
