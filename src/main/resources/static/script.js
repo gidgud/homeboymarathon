@@ -1,7 +1,7 @@
 
 const dataCache = {}
 
-async function navigateTo(pageId) {
+async function showPage(pageId) {
 
     document.querySelectorAll('.page').forEach(a => a.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
