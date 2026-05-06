@@ -12,20 +12,20 @@
 </head>
 <body>
 
-<div id="front-page">
-    <HEADER>
-        <h1>HB Marathon</h1>
-    </HEADER>
+<HEADER>
+    <h1>HB Marathon</h1>
+</HEADER>
 
-    <nav>
-        <h2>Forside</h2>
-        <h2>Datoer</h2>
-        <h2>Deltagerliste</h2>
-        <h2>Resultatliste</h2>
-        <h2>Diplom</h2>
-        <h2 class="right-btn">Tilmelding og betaling</h2>
-    </nav>
+<nav>
+    <button onclick="showPage('front-page')"> Forside </button>
+    <button onclick="showPage('event-page')"> Datoer </button>
+    <button onclick="showPage('participant-page')"> Deltagerliste </button>
+    <button onclick="showPage('result-page')"> Resultatliste </button>
+    <button onclick="showPage('diploma-page')"> Diplom </button>
+    <button class="right-btn" onclick="showPage('login-page')"> Login </button>
+</nav>
 
+<div id="front-page" class = "page">
 
     <div class="img-container">
         <div class="banner-text">
@@ -33,7 +33,6 @@
         </div>
         <img class="marathon-img" src="https://images.pexels.com/photos/2654902/pexels-photo-2654902.jpeg">
     </div>
-
 
     <div>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -46,29 +45,17 @@
     </div>
 </div>
 
-<div id="event-page">
+<div id="event-page" class = "page hidden"></div>
 
-    <table>
+<div id="participant-page" class = "page hidden"></div>
 
-        <thead>
+<div id="result-page" class = "page hidden"></div>
 
-        <tr>
+<div id="diploma-page" class = "page hidden"></div>
 
-            <td>Dato</td>
-            <td>Adresse</td>
-            <td>Rute</td>
+<div id="login-page" class = "page hidden"></div>
 
-        </tr>
-
-        </thead>
-
-        <tbody id="event-body" class="page hidden">
-
-        </tbody>
-
-    </table>
-
-</div>
+<script src="script.js"></script>
 
 </body>
 </html>
