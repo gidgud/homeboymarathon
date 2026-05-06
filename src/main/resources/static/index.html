@@ -1,61 +1,69 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HB MARATHON</title>
 
-    <link href="style.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap" rel="stylesheet">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>HB MARATHON</title>
+
+	<link href="style.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-<HEADER>
-    <h1>HB Marathon</h1>
-</HEADER>
+	<header>
+		<h1>HB Marathon</h1>
+	</header>
 
-<nav>
-    <button onclick="showPage('front-page')"> Forside </button>
-    <button onclick="showPage('event-page')"> Datoer </button>
-    <button onclick="showPage('participant-page')"> Deltagerliste </button>
-    <button onclick="showPage('result-page')"> Resultatliste </button>
-    <button onclick="showPage('diploma-page')"> Diplom </button>
-    <button class="right-btn" onclick="showPage('login-page')"> Login </button>
-</nav>
+	<nav>
+		<button onclick="showPage('front-page')"> Forside </button>
+		<button onclick="showPage('event-page')"> Datoer </button>
+		<button onclick="showPage('participant-page')"> Deltagerliste </button>
+		<button onclick="showPage('result-page')"> Resultatliste </button>
+		<button onclick="showPage('diploma-page')"> Diplom </button>
+		<button class="right-btn" onclick="showPage('login-page')"> Login </button>
+	</nav>
 
-<div id="front-page" class = "page">
+	<div id="front-page" class="page">
 
-    <div class="img-container">
-        <div class="banner-text">
-            <h3>HB MARATHON</h3>
-        </div>
-        <img class="marathon-img" src="https://images.pexels.com/photos/2654902/pexels-photo-2654902.jpeg">
-    </div>
+		<div class="img-container">
+			<div class="banner-text">
+				<h3>HB MARATHON</h3>
+			</div>
+			<img class="marathon-img"
+				src="https://images.pexels.com/photos/2654902/pexels-photo-2654902.jpeg">
+		</div>
 
-    <div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-            laborum.
-        </p>
-    </div>
-</div>
+		<div>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+				labore et dolore
+				magna aliqua.
+				Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+				commodo consequat.
+				Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+				nulla pariatur.
+				Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+				mollit anim id est
+				laborum.
+			</p>
+		</div>
+	</div>
 
-<div id="event-page" class = "page hidden"></div>
+	<div id="event-page" class="page hidden"></div>
 
-<div id="participant-page" class = "page hidden"></div>
+	<div id="participant-page" class="page hidden"></div>
 
-<div id="result-page" class = "page hidden"></div>
+	<div id="result-page" class="page hidden"></div>
 
-<div id="diploma-page" class = "page hidden"></div>
+	<div id="diploma-page" class="page hidden"></div>
 
-<div id="login-page" class = "page hidden"></div>
+	<div id="login-page" class="page hidden"></div>
 
-<script src="script.js"></script>
+	<script src="script.js"></script>
 
 </body>
+
 </html>
