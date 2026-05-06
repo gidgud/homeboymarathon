@@ -7,5 +7,7 @@ function showPage(name) {
 		initLoginPage();
 	} else if (name === 'create-page') {
 		initCreatePage();
-	}
+	} else if (name === 'event-page') {
+    initEventPage();
+  }
 }
