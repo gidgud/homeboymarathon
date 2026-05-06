@@ -47,7 +47,19 @@ function renderEvents(eventArray) {
 
       `;
 
+            let button = document.createElement("tr")
+            button.innerHTML = `
+            
+            <td colspan="2">
+            
+            <button onclick="">Tilmeld</button>
+            
+            </td>
+            
+            `
+
             tableBody.appendChild(row);
+            tableBody.appendChild(button)
 
         }
 
@@ -62,6 +74,12 @@ async function fetchEvents() {
     let eventData = await eventResponse.json();
     renderEvents(eventData);
     return eventData;
+
+}
+
+async function signUpForEvent() {
+
+
 
 }
 
