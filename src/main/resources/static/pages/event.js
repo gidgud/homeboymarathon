@@ -4,26 +4,13 @@ function initEventPage() {
     const page = document.getElementById("event-page");
 
     page.innerHTML = `
+        
+        <div id="event-grid" class="event-grid">
+                         
+        </div>
     
-    <h2>Events</h2>
-    
-        <table>
-    <thead>
-    
-    <tr>
-        <td>Dato</td>
-        <td>Adresse</td>
-        <td>Rute</td>
-    </tr>
-    
-    </thead>
-    
-    <tbody id="event-body"></tbody>
-    
-</table>
     
     `
-
     fetchEvents()
 
 }
@@ -32,34 +19,39 @@ function initEventPage() {
 
 function renderEvents(eventArray) {
 
-    let tableBody = document.querySelector("#event-body")
-    tableBody.innerHTML = "";
+    let grid = document.querySelector("#event-grid")
+    grid.innerHTML = "";
 
     eventArray.forEach(event => {
 
-            let row = document.createElement("tr");
+            let card = document.createElement("div");
+            card.classList.add("event-card");
 
-            row.innerHTML = `
+            card.innerHTML = `
 
-      <td>${event.date}</td>
-      <td>${event.address}</td>
-      <td rowspan="2"><img src="${event.route}"></td>
-
-      `;
-
-            let button = document.createElement("tr")
-            button.innerHTML = `
+            <div class="image-container">
             
-            <td colspan="2">
-            
-            <button onclick="">Tilmeld</button>
-            
-            </td>
-            
-            `
+                <img src="${event.imagePath}" class="event-image">
+                
+                <div class="event-information">
+                
+                <span class="event-information-top">${event.name}</span>
+                
+                <div class="event-information-bottom">
+                
+                <span class="event-date">${event.date}</span>
+                <span class="event-address">${event.address}</span>
+                <button class="sign-up-button">Tilmeld</button>
+                
+                </div>
+                
+                </div>
+                
+            </div>    
+    
+            `;
 
-            tableBody.appendChild(row);
-            tableBody.appendChild(button)
+            grid.appendChild(card);
 
         }
 
@@ -77,11 +69,6 @@ async function fetchEvents() {
 
 }
 
-async function signUpForEvent() {
-
-
-
-}
 
 
 

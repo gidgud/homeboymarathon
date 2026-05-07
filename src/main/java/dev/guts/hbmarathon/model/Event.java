@@ -30,6 +30,8 @@ public class Event {
 
 	private LocalDateTime date;
 
+	private String address;
+
 	private String imagePath;
 
 	private double price;
