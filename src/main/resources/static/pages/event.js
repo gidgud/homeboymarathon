@@ -43,7 +43,7 @@ function renderEvents(eventArray) {
 
       <td>${event.date}</td>
       <td>${event.address}</td>
-      <td><img src="${event.route}"></td>
+      <td rowspan="2"><img src="${event.route}"></td>
 
       `;
 
