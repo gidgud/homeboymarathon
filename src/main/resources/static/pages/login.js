@@ -21,7 +21,7 @@ async function initLoginPage() {
 
     const loginButton = document.createElement("button");
     loginButton.innerText = "Login";
-    loginButton.onclick = "login";
+    loginButton.addEventListener("click", loginUser);
 
     const createButton = document.createElement("button");
     createButton.innerText = "Opret bruger";
@@ -30,5 +30,48 @@ async function initLoginPage() {
     container.append(title, username, password, loginButton, createButton);
     page.appendChild(container);
 
+}
+
+async function loginUser() {
+
+    const email = document.getElementById("email").value;
+    const password =  document.getElementById("password").value;
+
+    const loginData = {
+        email,
+        password
+    };
+
+    try {
+
+        const response = await fetch("http://localhost:8080/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(loginData)
+        });
+
+        if(response.ok){
+
+            const user = await response.json();
+
+            alert("Login lykkedes!");
+
+            console.log(user);
+
+            showPage("front-page");
+
+        } else {
+
+            alert("Forkert email eller kodeord");
+
+        }
+
+    } catch(error) {
+
+        console.error(error);
+        alert("Server fejl")
+    }
 }
 
