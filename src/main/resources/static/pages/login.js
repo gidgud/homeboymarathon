@@ -2,6 +2,8 @@ async function initLoginPage() {
 
     const page = document.getElementById("login-page")
 
+    page.innerHTML = "";
+
     const container = document.createElement("div");
 
     const title = document.createElement("h2");

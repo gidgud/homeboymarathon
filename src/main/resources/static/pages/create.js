@@ -2,6 +2,8 @@ async function initCreatePage() {
 
     const page = document.getElementById("create-page")
 
+    page.innerHTML = "";
+
     const container = document.createElement("div");
 
     const title = document.createElement("h2");
