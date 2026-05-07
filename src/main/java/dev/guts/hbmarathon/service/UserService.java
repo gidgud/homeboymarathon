@@ -30,6 +30,10 @@ public class UserService {
 
     }
 
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
     public User updateUser(User user, Long userId){
 
         User oldUser = userRepository.findById(userId).orElseThrow();
