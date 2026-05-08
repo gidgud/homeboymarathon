@@ -5,6 +5,7 @@ async function initCreatePage() {
     page.innerHTML = "";
 
     const container = document.createElement("div");
+    container.className = "create-div";
 
     const title = document.createElement("h2");
     title.innerHTML = "Opret bruger"
@@ -39,11 +40,15 @@ async function initCreatePage() {
     password.placeholder = "Kodeord";
     password.id = "password";
 
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "btn-container"
+
     const createButton = document.createElement("button");
     createButton.innerText = "Opret";
     createButton.addEventListener("click", createUser);
 
-    container.append(title, firstName, lastName, birthday, phoneNumber, email, password, createButton);
+    buttonContainer.append(createButton)
+    container.append(title, firstName, lastName, birthday, phoneNumber, email, password, buttonContainer);
     page.appendChild(container);
 
 }

@@ -5,6 +5,7 @@ async function initLoginPage() {
     page.innerHTML = "";
 
     const container = document.createElement("div");
+    container.className = "login-div";
 
     const title = document.createElement("h2");
     title.innerHTML = "Login";
@@ -19,6 +20,9 @@ async function initLoginPage() {
     password.placeholder = "Kodeord";
     password.id = "password";
 
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "btn-container"
+
     const loginButton = document.createElement("button");
     loginButton.innerText = "Login";
     loginButton.addEventListener("click", loginUser);
@@ -27,7 +31,8 @@ async function initLoginPage() {
     createButton.innerText = "Opret bruger";
     createButton.onclick = () => showPage("create-page");
 
-    container.append(title, username, password, loginButton, createButton);
+    buttonContainer.append(loginButton, createButton)
+    container.append(title, username, password, buttonContainer);
     page.appendChild(container);
 
 }

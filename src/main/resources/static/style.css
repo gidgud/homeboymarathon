@@ -1,8 +1,8 @@
 /*
-FRONTPAGE
+        FRONTPAGE
 */
 * {
-    font-family: sans-serif;
+    font-family: Inter, sans-serif;
 }
 
 h1, h3 {
@@ -20,12 +20,17 @@ h1 {
 nav {
     display: flex;
     margin-left: 15px;
-    gap: 10px;
+    gap: 20px;
+    margin-bottom: 15px;
 }
 
 nav button {
+    border: none;
+    background-color: white;
     display: inline-block;
     text-align: center;
+    font-size: medium;
+    font-weight: lighter;
 }
 
 nav button:hover{
@@ -34,17 +39,8 @@ nav button:hover{
     text-underline-offset: 4px;
 }
 
-h2 {
-    margin: 0 20px;
-    margin-bottom: 28px;
-    font-family: Inter, sans-serif;
-    font-weight: lighter;
-    font-size: medium;
-}
-
 .right-btn{
     margin-left: auto;
-    margin-right: 35px;
     width: 200px;
 }
 
@@ -98,6 +94,10 @@ p {
     font-weight: bold;
     font-size: smaller;
 }
+
+/*
+        EVENT
+ */
 
 .event-grid {
 
@@ -158,6 +158,40 @@ p {
     background-color: white;
     border-radius: 8px;
 
+}
+
+
+/*
+        LOGIN & CREATE
+ */
+.login-div,
+.create-div {
+   display: grid;
+    margin: 5px 500px;
+    row-gap: 10px;
+}
+
+.login-div h2,
+.create-div h2{
+    margin-top: 75px;
+}
+
+.btn-container {
+    display: grid;
+    row-gap: 10px;
+    margin: 10px 70px;
+}
+
+.btn-container button {
+    border-radius: 8px;
+    border-color: #9d9c9c;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 7px 0;
+    font-weight: bold;
+}
+
+.btn-container button:hover {
+    background-color: #9d9c9c;
 }
 
 
