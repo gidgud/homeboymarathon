@@ -5,13 +5,27 @@ function initEventPage() {
 
     page.innerHTML = `
         
+        <div>
+        
+        <label></label>
+        <select class="date-filter" id="date-filter" onchange="filterEvents()">
+        
+        <option value="upcoming">Kommende events</option>
+        <option value="past">Tidligere events</option>
+        <option value="all">Alle events</option>
+        
+        </select>
+        
+        
+        </div>
+        
         <div id="event-grid" class="event-grid">
                          
         </div>
     
     
     `
-    fetchEvents()
+    filterEvents();
 
 }
 
@@ -20,12 +34,25 @@ function initEventPage() {
 function renderEvents(eventArray) {
 
     let grid = document.querySelector("#event-grid")
+
+
+
     grid.innerHTML = "";
 
     eventArray.forEach(event => {
 
             let card = document.createElement("div");
             card.classList.add("event-card");
+
+            const formattedDate = new Date(event.date.replace("T", " ")).toLocaleString("da-DK", {
+
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+
+            })
 
             card.innerHTML = `
 
@@ -35,13 +62,27 @@ function renderEvents(eventArray) {
                 
                 <div class="event-information">
                 
-                <span class="event-information-top">${event.name}</span>
+                <div class="event-information-top">
+                
+                <span class="event-information-name">${event.name}</span>
+                
+                </div>
                 
                 <div class="event-information-bottom">
+                  
+                <div class="event-information-bottom-left">
                 
-                <span class="event-date">${event.date}</span>
-                <span class="event-address">${event.address}</span>
+                <span class="event-date">Dato: ${formattedDate}</span>
+                <span class="event-address">Adresse: ${event.address}</span>
+                
+                
+                </div>
+                
+                <div class="event-information-bottom-right">
+                
                 <button class="sign-up-button">Tilmeld</button>
+                
+                </div>
                 
                 </div>
                 
@@ -69,6 +110,24 @@ async function fetchEvents() {
 
 }
 
+function filterEvents() {
+
+    const date = document.getElementById("date-filter").value;
+    const dateNow = new Date();
+
+    fetchEvents().then(events => {
+
+        const filteredDates = events.filter(event => {
+
+        const eventDate = new Date(event.date.replace("T", " "));
+        if (date === "upcoming") return eventDate >= dateNow;
+        if (date === "past") return eventDate < dateNow;
+        return true;
+
+        });
+        renderEvents(filteredDates);
+    });
 
 
+}
 
