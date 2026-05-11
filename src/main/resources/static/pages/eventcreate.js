@@ -1,5 +1,5 @@
 function initEventCreatePage() {
-	const container = document.getElementById('create-page');
+	const container = document.getElementById('event-create-page');
 
 	container.innerHTML = `
     <div class="create-container">
