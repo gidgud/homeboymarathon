@@ -192,7 +192,7 @@ p {
 
 .event-date, .event-address, .event-price{
 
-    font-size: 18px;
+    font-size: 14px;
     background: linear-gradient(to right, #8BF7B6, white);
     border-radius: 8px;
     padding: 6px 8px;
