@@ -5,8 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import dev.guts.hbmarathon.model.Registration;
 
+import java.util.List;
+
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
 
-	
+
+    List<Registration> findAllByEvent_Id(Long eventId);
+
 }
