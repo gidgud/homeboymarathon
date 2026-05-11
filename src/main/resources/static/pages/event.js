@@ -124,8 +124,17 @@ function filterEvents() {
         if (date === "past") return eventDate < dateNow;
         return true;
 
-        });
+        }).sort((a, b) => {
+
+            if (date === "past") {
+                return new Date(b.date) - new Date(a.date)
+            }
+            return new Date(a.date) - new Date(b.date)
+
+            });
+
         renderEvents(filteredDates);
+
     });
 
 
