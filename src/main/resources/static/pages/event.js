@@ -1,4 +1,3 @@
-
 function initEventPage() {
 
     const page = document.getElementById("event-page");
@@ -30,11 +29,9 @@ function initEventPage() {
 }
 
 
-
 function renderEvents(eventArray) {
 
     let grid = document.querySelector("#event-grid")
-
 
 
     grid.innerHTML = "";
@@ -80,7 +77,7 @@ function renderEvents(eventArray) {
                 
                 <div class="event-information-bottom-right">
                 
-                <button class="sign-up-button">Tilmeld</button>
+                <button class="sign-up-button" onclick="registerForEvent(${user.id}, ${event.id}, ${event.distance})">Tilmeld</button>
                 
                 </div>
                 
@@ -95,7 +92,6 @@ function renderEvents(eventArray) {
             grid.appendChild(card);
 
         }
-
     )
 
 
@@ -119,10 +115,10 @@ function filterEvents() {
 
         const filteredDates = events.filter(event => {
 
-        const eventDate = new Date(event.date.replace("T", " "));
-        if (date === "upcoming") return eventDate >= dateNow;
-        if (date === "past") return eventDate < dateNow;
-        return true;
+            const eventDate = new Date(event.date.replace("T", " "));
+            if (date === "upcoming") return eventDate >= dateNow;
+            if (date === "past") return eventDate < dateNow;
+            return true;
 
         }).sort((a, b) => {
 
@@ -131,12 +127,31 @@ function filterEvents() {
             }
             return new Date(a.date) - new Date(b.date)
 
-            });
+        });
 
         renderEvents(filteredDates);
 
     });
 
+
+}
+
+function registerForEvent(userId, eventId, distance) {
+
+    fetch("http://localhost:8080/api/registrations", {
+
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+                userId: userId,
+                eventId: eventId,
+                distance: distance
+
+        })
+    })
+        .then(response => response.json())
 
 }
 
