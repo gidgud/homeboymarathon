@@ -33,12 +33,12 @@ async function initCreatePage() {
     const email = document.createElement("input");
     email.type = "email";
     email.placeholder = "HBMarathon@gmail.com";
-    email.id = "email";
+    email.id = "email.id";
 
     const password = document.createElement("input");
     password.type = "password";
     password.placeholder = "Kodeord";
-    password.id = "password";
+    password.id = "password.id";
 
     const buttonContainer = document.createElement("div");
     buttonContainer.className = "btn-container"
@@ -59,8 +59,8 @@ async function createUser (){
         lastName: document.getElementById("lastName").value,
         dateOfBirth: document.getElementById("dateOfBirth").value,
         phoneNumber: document.getElementById("phoneNumber").value,
-        email: document.getElementById("email").value,
-        password: document.getElementById("password").value
+        email: document.getElementById("email.id").value,
+        password: document.getElementById("password.id").value
     };
 
     try {
