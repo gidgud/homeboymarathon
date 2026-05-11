@@ -74,7 +74,7 @@ function renderEvents(eventArray) {
                 
                 <span class="event-date">Dato: ${formattedDate}</span>
                 <span class="event-address">Adresse: ${event.address}</span>
-                
+                <span class="event-price">Tilmeldingspris: ${event.price} kr.</span>
                 
                 </div>
                 
