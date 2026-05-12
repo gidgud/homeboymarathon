@@ -6,6 +6,7 @@ public record RegistrationResponse (
         Long id,
         String username,
         String eventName,
+        Double price,
         Double distance
 
 ) {}

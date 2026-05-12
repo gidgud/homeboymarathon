@@ -4,7 +4,9 @@ public record RegistrationRequest(
 
         Long userId,
         Long eventId,
+        Double price,
         Double distance
+
 
 ) {
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/events")
 public class EventController {
 
-	private EventService eventService;
+	private final EventService eventService;
 
 	public EventController(EventService eventService) {
 		this.eventService = eventService;
