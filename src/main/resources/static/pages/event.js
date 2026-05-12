@@ -15,7 +15,6 @@ function initEventPage() {
         
         </select>
         
-        
         </div>
         
         <div id="event-grid" class="event-grid">
@@ -71,17 +70,16 @@ function renderEvents(eventArray) {
                 
                 <span class="event-date">Dato: ${formattedDate}</span>
                 <span class="event-address">Adresse: ${event.address}</span>
-                <span class="event-price">Tilmeldingspris: ${event.price} kr.</span>
                 
                 </div>
                 
                 <div class="event-information-bottom-right">
                 
-                <select class="distance-drop-down" id="distance-${event.id}">
+                <select class="race-type-drop-down" id="raceType-${event.id}">
                 
-                <option value="undefined">Vælg distance</option>
-                <option value=42>Marathon</option>
-                <option value=21>Halv Marathon</option>
+                <option value="undefined" >Vælg distance</option>
+                <option value="marathon">Marathon - 50 kr.</option>
+                <option value="half-marathon">Halv Marathon - 30 kr.</option>
                 
                 </select>
                 
@@ -150,14 +148,16 @@ function registerForEvent(eventId) {
     const user = JSON.parse(savedUserId);
     const userId = user.id;
 
-    const distance = document.getElementById(`distance-${eventId}`).value;
+    const raceType = document.getElementById(`raceType-${eventId}`).value;
 
-    if(distance === "undefined") {
-
+    if(raceType === "undefined") {
         alert("Vælg en distance");
         return;
 
     }
+
+    const price = raceType === "marathon" ? 50 : 30;
+    const distance = raceType === "marathon" ? 42 : 21;
 
     fetch("http://localhost:8080/api/registrations", {
 
@@ -168,6 +168,7 @@ function registerForEvent(eventId) {
         body: JSON.stringify({
                 userId: userId,
                 eventId: eventId,
+                price: price,
                 distance: distance
 
         })
@@ -175,4 +176,3 @@ function registerForEvent(eventId) {
         .then(response => response.json())
 
 }
-

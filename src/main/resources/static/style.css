@@ -215,9 +215,9 @@ nav button:hover{
 
 }
 
-.event-date, .event-address, .event-price{
+.event-date, .event-address{
 
-    font-size: 14px;
+    font-size: 16px;
     background: linear-gradient(to right, #8BF7B6, white);
     border-radius: 8px;
     padding: 6px 8px;
@@ -226,16 +226,16 @@ nav button:hover{
 
 .sign-up-button {
 
-    font-size: 18px;
+    font-size: 14px;
     background-color: white;
     border-radius: 8px;
-    padding: 6px 8px;
+    padding: 4px 6px;
 
 }
 
 .distance-drop-down {
 
-    font-size: 18px;
+    font-size: 14px;
     background-color: white;
     border-radius: 8px;
     padding: 4px 6px;
