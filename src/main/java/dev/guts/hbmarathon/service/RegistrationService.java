@@ -31,6 +31,10 @@ public class RegistrationService {
 
 	public RegistrationResponse createRegistration(RegistrationRequest registrationRequest) {
 
+		if(registrationRepository.existsByUser_IdAndEvent_Id(registrationRequest.userId(), registrationRequest.eventId())) {
+			throw new RuntimeException();
+		}
+
 		User user = userRepository.findById(registrationRequest.userId()).orElseThrow();
 		Event event = eventRepository.findById(registrationRequest.eventId()).orElseThrow();
 
