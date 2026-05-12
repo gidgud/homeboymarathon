@@ -1,12 +1,17 @@
 function initEventPage() {
 
+    //Opretter en konstant, så siden kan renderes i script.js.
+
     const page = document.getElementById("event-page");
+
+    //Definerer den del af siden, der skal renderes, når scriptet bliver kaldt i script.js.
+
+    //Dropdown menu til filtrering efter kommende og tidligere events.
 
     page.innerHTML = `
         
         <div>
         
-        <label></label>
         <select class="date-filter" id="date-filter" onchange="filterEvents()">
         
         <option value="upcoming">Kommende events</option>
@@ -23,24 +28,42 @@ function initEventPage() {
     
     
     `
+
+    //Kører filterEvents for at få et filtreret array af events afhængigt at brugerens valg i dropdown menuen.
     filterEvents();
 
 }
 
+//Script til at rendere events på siden.
+async function renderEvents(eventArray) {
 
-function renderEvents(eventArray) {
+    //Definerer user, så man kan finde userId for brugeren, der er logget ind.
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
-    let grid = document.querySelector("#event-grid")
+    //Henter en liste af alle registrations for den bruger, der er logget ind.
+    const userRegistrations = await fetch(`http://localhost:8080/api/registrations/user/${user.id}`)
+        .then(r => r.json());
 
+    //Opretter en liste bestående af event ids til alle brugerens registrations.
+    const registeredEventIds = userRegistrations.map(r => r.eventId);
+
+    //Opretter grid som er den dynamiske del af siden, der skal renderes.
+    const grid = document.querySelector("#event-grid");
 
     grid.innerHTML = "";
 
+    //Den løber igennem et array af events for at rendere dem.
     eventArray.forEach(event => {
 
-            let card = document.createElement("div");
+            //Kontrollerer om brugeren allerede er tilmeldt hvert event.
+            const isRegistered = registeredEventIds.includes(event.id);
+
+            //Opretter en div til hvert event.
+            const card = document.createElement("div");
             card.classList.add("event-card");
 
-            const formattedDate = new Date(event.date.replace("T", " ")).toLocaleString("da-DK", {
+            //Formaterer date.
+            const formattedDate = new Date(event.date).toLocaleString("da-DK", {
 
                 day: "numeric",
                 month: "long",
@@ -50,11 +73,12 @@ function renderEvents(eventArray) {
 
             })
 
+            //Definerer hvad hver event div skal indeholde
             card.innerHTML = `
 
             <div class="image-container">
             
-                <img src="${event.imagePath}" class="event-image">
+                <img src="${event.imagePath}" class="event-image" alt="løberute">
                 
                 <div class="event-information">
                 
@@ -75,6 +99,7 @@ function renderEvents(eventArray) {
                 
                 <div class="event-information-bottom-right">
                 
+                ${isRegistered ? "" : `
                 <select class="race-type-drop-down" id="raceType-${event.id}">
                 
                 <option value="undefined" >Vælg distance</option>
@@ -82,8 +107,13 @@ function renderEvents(eventArray) {
                 <option value="half-marathon">Halv Marathon - 30 kr.</option>
                 
                 </select>
+                `}
                 
-                <button class="sign-up-button" onclick="registerForEvent(${event.id})">Tilmeld</button>
+                
+                <button class="sign-up-button" id="sign-up-button-${event.id}"  
+                ${isRegistered ? "disabled" : ""}>
+                ${isRegistered ? "Tilmeldt" : "Tilmeld"}
+                </button>
                 
                 </div>
                 
@@ -95,6 +125,13 @@ function renderEvents(eventArray) {
     
             `;
 
+            const signUpButton = card.querySelector(".sign-up-button");
+
+            signUpButton.addEventListener("click", () => {
+                registerForEvent(event.id);
+            })
+
+            //Tilføjer event div til grid
             grid.appendChild(card);
 
         }
@@ -103,32 +140,34 @@ function renderEvents(eventArray) {
 
 }
 
+//Henter events med fetch fra backend gennem end point. Man renderer herefter den hentede data.
 async function fetchEvents() {
 
-    let eventResponse = await fetch("http://localhost:8080/api/events");
-    let eventData = await eventResponse.json();
-    renderEvents(eventData);
-    return eventData;
+    const eventResponse = await fetch("http://localhost:8080/api/events");
+    return await eventResponse.json();
 
 }
 
-function filterEvents() {
+//Script til at filtrere events efter tidspunkt
+async function filterEvents() {
 
-    const date = document.getElementById("date-filter").value;
+    const dateFilter = document.getElementById("date-filter").value;
     const dateNow = new Date();
 
     fetchEvents().then(events => {
 
+        //Sorterer forskelligt afhængigt af om det er kommende el. tidligere event.
         const filteredDates = events.filter(event => {
 
-            const eventDate = new Date(event.date.replace("T", " "));
-            if (date === "upcoming") return eventDate >= dateNow;
-            if (date === "past") return eventDate < dateNow;
+            const eventDate = new Date(event.date);
+            if (dateFilter === "upcoming") return eventDate >= dateNow;
+            if (dateFilter === "past") return eventDate < dateNow;
             return true;
+
 
         }).sort((a, b) => {
 
-            if (date === "past") {
+            if (dateFilter === "past") {
                 return new Date(b.date) - new Date(a.date)
             }
             return new Date(a.date) - new Date(b.date)
@@ -142,23 +181,29 @@ function filterEvents() {
 
 }
 
+//Script til at registere bruger til event.
 function registerForEvent(eventId) {
 
+    //Finder userId fra localStorage.
     const savedUserId = localStorage.getItem("loggedInUser");
     const user = JSON.parse(savedUserId);
     const userId = user.id;
 
+    //Finder raceType ud fra valg i dropdown menu.
     const raceType = document.getElementById(`raceType-${eventId}`).value;
 
-    if(raceType === "undefined") {
+    //Sikrer at brugeren vælger en mulighed.
+    if (raceType === "undefined") {
         alert("Vælg en distance");
         return;
 
     }
 
+    //Definerer variable afhængigt af valg i dropdown.
     const price = raceType === "marathon" ? 50 : 30;
     const distance = raceType === "marathon" ? 42 : 21;
 
+    //Kalder POST-metode til at tilføje til databasen.
     fetch("http://localhost:8080/api/registrations", {
 
         method: "POST",
@@ -166,13 +211,25 @@ function registerForEvent(eventId) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-                userId: userId,
-                eventId: eventId,
-                price: price,
-                distance: distance
+            userId: userId,
+            eventId: eventId,
+            price: price,
+            distance: distance
 
         })
     })
         .then(response => response.json())
+        .then(() => {
+
+            //Fjerne dropdown og disabler button ved tilmelding.
+
+            const dropdown = document.getElementById(`raceType-${eventId}`);
+            dropdown.remove();
+
+            const button = document.getElementById(`sign-up-button-${eventId}`);
+            button.innerText = "Tilmeldt";
+            button.disabled = true;
+
+        })
 
 }

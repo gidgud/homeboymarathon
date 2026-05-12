@@ -78,6 +78,15 @@ public class RegistrationService {
 
 	}
 
+	public List<RegistrationResponse> findAllRegistrationsForSpecificUser(Long userId) {
+
+		return registrationRepository.findAllByUserId(userId)
+				.stream()
+				.map(registrationMapper::mapToResponse)
+				.toList();
+
+	}
+
 
 
 
