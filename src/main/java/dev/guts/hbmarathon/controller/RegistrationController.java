@@ -50,4 +50,11 @@ public class RegistrationController {
 
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<RegistrationResponse>> findAllRegistrationsForSpecificUser(@PathVariable Long userId) {
+
+        return ResponseEntity.ok(registrationService.findAllRegistrationsForSpecificUser(userId));
+
+    }
+
 }

@@ -13,6 +13,7 @@ public class RegistrationMapper {
                 registration.getId(),
                 registration.getUser().getEmail(),
                 registration.getEvent().getName(),
+                registration.getEvent().getId(),
                 registration.getPrice(),
                 registration.getDistance()
 
