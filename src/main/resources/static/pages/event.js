@@ -77,7 +77,7 @@ function renderEvents(eventArray) {
                 
                 <div class="event-information-bottom-right">
                 
-                <button class="sign-up-button" onclick="registerForEvent(${user.id}, ${event.id}, ${event.distance})">Tilmeld</button>
+                <button class="sign-up-button">Tilmeld</button>
                 
                 </div>
                 
@@ -136,7 +136,11 @@ function filterEvents() {
 
 }
 
-function registerForEvent(userId, eventId, distance) {
+function registerForEvent(eventId, distance) {
+
+    const savedUserId = localStorage.getItem("loggedInUser");
+    const user = JSON.parse(savedUserId);
+    const userId = user.id;
 
     fetch("http://localhost:8080/api/registrations", {
 
