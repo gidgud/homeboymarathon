@@ -254,7 +254,8 @@ nav button:hover{
         LOGIN & CREATE
  */
 .login-div,
-.create-div {
+.create-div,
+.edit-user-div {
    display: grid;
     margin: 5px 500px;
     row-gap: 10px;

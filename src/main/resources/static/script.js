@@ -7,6 +7,7 @@ function showPage(name) {
     if (name === 'create-page') initCreatePage();
     if (name === 'event-page') initEventPage();
     if (name === 'event-create-page') initEventCreatePage();
+    if (name === 'edit-user-page') initEditUser();
 
 }
 
@@ -50,6 +51,7 @@ function toggleUserMenu() {
     const editUser = document.createElement("button");
     editUser.innerText = "Rediger bruger"
     editUser.onclick = () => {
+        initEditUser();
         showPage("edit-user-page");
         dropdownContainer.remove();
     }
