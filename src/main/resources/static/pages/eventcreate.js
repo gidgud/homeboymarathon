@@ -20,10 +20,6 @@ function initEventCreatePage() {
           <label for="event-address">Adresse</label>
           <input type="text" id="event-address" placeholder="Vejnavn, by" required />
         </div>
-        <div class="form-group">
-          <label for="event-price">Pris (kr)</label>
-          <input type="number" id="event-price" placeholder="0.00" min="0" step="0.01" required />
-        </div>
         <div id="create-error" class="error-msg hidden"></div>
         <button type="submit" id="create-btn">Opret</button>
       </form>
