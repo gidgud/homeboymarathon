@@ -23,8 +23,10 @@ public class Registration {
 	private Long id;
 
 	private double distance;
+
+	private double price;
 	
-	private boolean isPaid = false;
+	private boolean isPaid;
 
 	@ManyToOne
 	private User user;
