@@ -77,7 +77,15 @@ function renderEvents(eventArray) {
                 
                 <div class="event-information-bottom-right">
                 
-                <button class="sign-up-button">Tilmeld</button>
+                <select class="distance-drop-down" id="distance-${event.id}">
+                
+                <option value="undefined">Vælg distance</option>
+                <option value=42>Marathon</option>
+                <option value=21>Halv Marathon</option>
+                
+                </select>
+                
+                <button class="sign-up-button" onclick="registerForEvent(${event.id})">Tilmeld</button>
                 
                 </div>
                 
@@ -136,11 +144,20 @@ function filterEvents() {
 
 }
 
-function registerForEvent(eventId, distance) {
+function registerForEvent(eventId) {
 
     const savedUserId = localStorage.getItem("loggedInUser");
     const user = JSON.parse(savedUserId);
     const userId = user.id;
+
+    const distance = document.getElementById(`distance-${eventId}`).value;
+
+    if(distance === "undefined") {
+
+        alert("Vælg en distance");
+        return;
+
+    }
 
     fetch("http://localhost:8080/api/registrations", {
 

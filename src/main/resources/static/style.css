@@ -208,6 +208,16 @@ p {
 
 }
 
+.distance-drop-down {
+
+    font-size: 18px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 4px 6px;
+    border: solid black 2px;
+
+}
+
 .sign-up-button:hover {
 
     background: #8BF7B6;
