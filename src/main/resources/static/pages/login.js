@@ -63,7 +63,11 @@ async function loginUser() {
 
             alert("Login lykkedes!");
 
+            localStorage.setItem("loggedInUser", JSON.stringify(user));
+
             console.log(user);
+
+            updateNav();
 
             showPage("front-page");
 
