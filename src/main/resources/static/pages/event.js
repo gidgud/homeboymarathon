@@ -113,8 +113,8 @@ async function renderEvents(eventArray) {
                 `}
                 
                 
-                <button class="sign-up-button" id="sign-up-button-${event.id}"  
-                ${isRegistered ? "disabled" : ""}>
+                <button class="${isRegistered ? "registered-button" : "sign-up-button"}"  id="sign-up-button-${event.id}"  
+                >
                 ${isRegistered ? "Tilmeldt" : "Tilmeld"}
                 </button>
                 
@@ -235,7 +235,9 @@ function registerForEvent(eventId) {
 
             const button = document.getElementById(`sign-up-button-${eventId}`);
             button.innerText = "Tilmeldt";
-            button.disabled = true;
+            button.style.pointerEvents = "none";
+            button.classList.remove("sign-up-button")
+            button.classList.add("registered-button")
 
         })
 
