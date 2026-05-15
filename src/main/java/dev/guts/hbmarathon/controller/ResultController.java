@@ -1,20 +1,33 @@
 package dev.guts.hbmarathon.controller;
 
+import dev.guts.hbmarathon.DTO.ResultRequest;
+import dev.guts.hbmarathon.mapper.EventMapper;
+import dev.guts.hbmarathon.model.Event;
 import dev.guts.hbmarathon.model.Result;
+import dev.guts.hbmarathon.model.User;
+import dev.guts.hbmarathon.repository.EventRepository;
+import dev.guts.hbmarathon.repository.UserRepository;
 import dev.guts.hbmarathon.service.ResultService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/results")
 public class ResultController {
 
+    private final EventMapper eventMapper;
+    private final EventRepository eventRepository;
+    private final UserRepository userRepository;
     private ResultService resultService;
 
-    public ResultController (ResultService resultService){
+    public ResultController (ResultService resultService, EventMapper eventMapper, EventRepository eventRepository, UserRepository userRepository){
         this.resultService = resultService;
+        this.eventMapper = eventMapper;
+        this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -32,10 +45,23 @@ public class ResultController {
     }
 
     @PostMapping
-    public ResponseEntity<Result> createResult (@RequestBody Result result){
-        Result newResult = resultService.createResult(result);
+    public ResponseEntity<Result> createResult (@RequestBody ResultRequest requests){
+        Event event = eventRepository.findById(requests.getEventId()).orElseThrow();
+        User user = userRepository.findById(requests.getUserId()).orElseThrow();
 
-        return ResponseEntity.ok(newResult);
+        String[] parts = requests.getTime().split(":");
+
+        Duration duration = Duration.ofHours(Long.parseLong(parts[0]))
+                .plusMinutes(Long.parseLong(parts[1]))
+                .plusSeconds(Long.parseLong(parts[2]));
+
+        Result result = Result.builder()
+                .event(event)
+                .user(user)
+                .time(duration)
+                .build();
+
+        return ResponseEntity.ok(result);
     }
 
     @PutMapping("/{id}")

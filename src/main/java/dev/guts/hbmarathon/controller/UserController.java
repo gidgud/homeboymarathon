@@ -5,6 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import dev.guts.hbmarathon.service.UserService;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -22,6 +25,13 @@ public class UserController {
 		User newUser = userService.createUser(user);
 
 		return ResponseEntity.ok().body(newUser);
+	}
+
+	@GetMapping
+	public ResponseEntity<List<User>> findAllUsers(){
+		List<User> allUsers = userService.findAllUsers();
+
+		return ResponseEntity.ok(allUsers);
 	}
 
 	@GetMapping("/{id}")
