@@ -13,15 +13,7 @@ function initAddResult () {
     const title = document.createElement("h2");
     title.innerHTML = "Tilføj resultat";
 
-    const eventInput = document.createElement("input");
-    eventInput.type = "text";
-    eventInput.placeholder = "Indtast dato";
-    eventInput.id = "event-dropdown";
-
-    const eventList = document.createElement("ul");
-    eventList.id = "event-list"
-
-    eventInput.addEventListener("keyup", filterEvents)
+    promptEventSelection();
 
     const miniTitle1 = document.createElement("h4");
     miniTitle1.innerHTML = "Deltager";
@@ -84,6 +76,25 @@ function initAddResult () {
     });
     container.append(title, eventInput, eventList, miniTitle1, userDropdown, userList, miniTitle2, raceTime, submitBtn);
     page.appendChild(container);
+}
+
+function promptEventSelection() {
+
+    const container = document.getElementById("view-result-page")
+        || document.getElementById("add-result-page");
+
+    const eventInput = document.createElement("input");
+    eventInput.type = "text";
+    eventInput.placeholder = "Indtast dato";
+    eventInput.id = "event-dropdown";
+
+    const eventList = document.createElement("ul");
+    eventList.id = "event-list"
+
+    container.append(eventInput, eventList);
+
+    eventInput.addEventListener("keyup", filterEvents)
+
 }
 
 async function filterUser() {
