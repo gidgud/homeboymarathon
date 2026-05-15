@@ -9,6 +9,7 @@ function showPage(name) {
     if (name === 'event-create-page') initEventCreatePage();
     if (name === 'edit-user-page') initEditUser();
     if (name === 'add-result-page') initAddResult();
+    if (name === 'view-result-page') initViewResult();
 
 }
 
