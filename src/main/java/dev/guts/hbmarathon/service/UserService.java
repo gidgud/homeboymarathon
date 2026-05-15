@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import dev.guts.hbmarathon.repository.UserRepository;
 import dev.guts.hbmarathon.mapper.UserMapper;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -19,15 +21,15 @@ public class UserService {
     }
 
     public User createUser(User user) {
-
         return userRepository.save(user);
+    }
 
+    public List<User> findAllUsers () {
+        return userRepository.findAll();
     }
 
     public User findUserById(Long userId){
-
         return userRepository.findById(userId).orElseThrow();
-
     }
 
     public User findByEmail(String email){
@@ -49,11 +51,9 @@ public class UserService {
     }
 
     public void deleteUser(Long userId) {
-
         User user = userRepository.findById(userId).orElseThrow();
 
         userRepository.delete(user);
-
     }
 
 }
