@@ -233,6 +233,28 @@ nav button:hover{
 
 }
 
+.sign-up-button:hover {
+
+    background: #8BF7B6;
+
+}
+
+.registered-button {
+
+    font-size: 16px;
+    background: linear-gradient(to right, #8BF7B6, white);
+    border-radius: 8px;
+    padding: 6px 8px;
+
+}
+
+.registered-button:disabled {
+    opacity: 1 !important;
+    cursor: default;
+    background: linear-gradient(to right, #8BF7B6, white);
+
+}
+
 .race-type-drop-down {
 
     font-size: 14px;
@@ -242,13 +264,6 @@ nav button:hover{
     border: solid black 2px;
 
 }
-
-.sign-up-button:hover {
-
-    background: #8BF7B6;
-
-}
-
 
 /*
         LOGIN & CREATE

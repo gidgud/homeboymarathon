@@ -39,6 +39,7 @@ async function renderEvents(eventArray) {
 
     //Definerer user, så man kan finde userId for brugeren, der er logget ind.
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const dateNow = new Date();
 
     //Henter en liste af alle registrations for den bruger, der er logget ind.
     const userRegistrations = await fetch(`http://localhost:8080/api/registrations/user/${user.id}`)
@@ -57,6 +58,7 @@ async function renderEvents(eventArray) {
 
             //Kontrollerer om brugeren allerede er tilmeldt hvert event.
             const isRegistered = registeredEventIds.includes(event.id);
+            const isPastEvent = new Date(event.date) < dateNow;
 
             //Opretter en div til hvert event.
             const card = document.createElement("div");
@@ -99,6 +101,7 @@ async function renderEvents(eventArray) {
                 
                 <div class="event-information-bottom-right">
                 
+                ${isPastEvent ? "" : `
                 ${isRegistered ? "" : `
                 <select class="race-type-drop-down" id="raceType-${event.id}">
                 
@@ -110,10 +113,12 @@ async function renderEvents(eventArray) {
                 `}
                 
                 
-                <button class="sign-up-button" id="sign-up-button-${event.id}"  
-                ${isRegistered ? "disabled" : ""}>
+                <button class="${isRegistered ? "registered-button" : "sign-up-button"}"  id="sign-up-button-${event.id}"  
+                >
                 ${isRegistered ? "Tilmeldt" : "Tilmeld"}
                 </button>
+                
+                `}
                 
                 </div>
                 
@@ -127,9 +132,11 @@ async function renderEvents(eventArray) {
 
             const signUpButton = card.querySelector(".sign-up-button");
 
+            if(signUpButton) {
             signUpButton.addEventListener("click", () => {
                 registerForEvent(event.id);
             })
+                }
 
             //Tilføjer event div til grid
             grid.appendChild(card);
@@ -228,7 +235,9 @@ function registerForEvent(eventId) {
 
             const button = document.getElementById(`sign-up-button-${eventId}`);
             button.innerText = "Tilmeldt";
-            button.disabled = true;
+            button.style.pointerEvents = "none";
+            button.classList.remove("sign-up-button")
+            button.classList.add("registered-button")
 
         })
 
