@@ -1,19 +1,13 @@
-let selectedUserId = null;
-let selectedEventId = null;
-
-function initAddResult () {
+function initAddResult() {
 
     const page = document.getElementById("add-result-page");
-
-    page.innerHTML = " ";
+    page.innerHTML = "";
 
     const container = document.createElement("div");
     container.className = "add-result-div";
 
     const title = document.createElement("h2");
     title.innerHTML = "Tilføj resultat";
-
-    promptEventSelection();
 
     const miniTitle1 = document.createElement("h4");
     miniTitle1.innerHTML = "Deltager";
@@ -22,66 +16,68 @@ function initAddResult () {
     userDropdown.type = "text";
     userDropdown.id = "user-dropdown";
     userDropdown.placeholder = "Vælg deltager";
+    userDropdown.addEventListener("keyup", filterUser);
 
     const userList = document.createElement("ul");
     userList.id = "user-list";
 
-    userDropdown.addEventListener("keyup", filterUser)
-
     const miniTitle2 = document.createElement("h4");
-    miniTitle2.innerHTML = "Tid"
+    miniTitle2.innerHTML = "Tid";
 
     const raceTime = document.createElement("input");
-    raceTime.type = "time";
-    raceTime.step = "1";
+    raceTime.type = "text";
     raceTime.placeholder = "HH:MM:SS";
     raceTime.id = "race-time";
 
     const submitBtn = document.createElement("button");
     submitBtn.innerText = "Opret resultat";
-    submitBtn.id = "submit-btn";
 
-    submitBtn.addEventListener("click", async() => {
+    submitBtn.addEventListener("click", async () => {
 
-        const timeValue = document.getElementById("race-time").value;
+        if (!selectedEventId || !selectedUserId) {
+            alert("Vælg event og deltager først");
+            return;
+        }
 
         const resultData = {
             eventId: selectedEventId,
             userId: selectedUserId,
-            time: timeValue
+            time: timeToSeconds(document.getElementById("race-time").value)
         };
 
         try {
-
             const response = await fetch("/api/results", {
-
                 method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(resultData)
             });
 
-            if(response.ok) {
-
+            if (response.ok) {
                 alert("Resultatet er oprettet yay! B)");
             }
 
         } catch (error) {
-
-            console.error("Det gik jo galt igen, øv", error);
+            console.error("Fejl:", error);
         }
     });
-    container.append(title, eventInput, eventList, miniTitle1, userDropdown, userList, miniTitle2, raceTime, submitBtn);
+
+    container.appendChild(title);
+
+    promptEventSelection(container);
+
+    container.append(
+        miniTitle1,
+        userDropdown,
+        userList,
+        miniTitle2,
+        raceTime,
+        submitBtn
+    );
+
     page.appendChild(container);
 }
 
-function promptEventSelection() {
-
-    const container = document.getElementById("view-result-page")
-        || document.getElementById("add-result-page");
+function promptEventSelection(container) {
 
     const eventInput = document.createElement("input");
     eventInput.type = "text";
@@ -89,12 +85,11 @@ function promptEventSelection() {
     eventInput.id = "event-dropdown";
 
     const eventList = document.createElement("ul");
-    eventList.id = "event-list"
+    eventList.id = "event-list";
+
+    eventInput.addEventListener("keyup", filterEvents);
 
     container.append(eventInput, eventList);
-
-    eventInput.addEventListener("keyup", filterEvents)
-
 }
 
 async function filterUser() {
@@ -149,13 +144,17 @@ async function filterEvents(){
 
             li.textContent = `${event.name} (${event.date})`;
 
-            li.addEventListener("click", () => {
+            li.addEventListener("click", async() => {
 
                 searchInput.value = li.textContent;
 
                 selectedEventId = event.id;
 
                 eventList.innerHTML = "";
+
+                const container = document.querySelector(".view-result-div");
+
+                await createResultTable(container);
 
             });
 
@@ -166,4 +165,9 @@ async function filterEvents(){
 
         console.error("Grrr nu virker det ikke igen", error);
     }
+}
+
+function timeToSeconds(time) {
+    const [h, m, s] = time.split(":").map(Number);
+    return (h * 3600) + (m * 60) + s;
 }
