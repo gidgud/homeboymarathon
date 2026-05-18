@@ -49,11 +49,7 @@ public class ResultController {
         Event event = eventRepository.findById(requests.getEventId()).orElseThrow();
         User user = userRepository.findById(requests.getUserId()).orElseThrow();
 
-        String[] parts = requests.getTime().split(":");
-
-        Duration duration = Duration.ofHours(Long.parseLong(parts[0]))
-                .plusMinutes(Long.parseLong(parts[1]))
-                .plusSeconds(Long.parseLong(parts[2]));
+        Duration duration = Duration.ofSeconds(requests.getTime());
 
         Result result = Result.builder()
                 .event(event)
@@ -61,7 +57,15 @@ public class ResultController {
                 .time(duration)
                 .build();
 
+        Result saved = resultService.createResult(result);
+
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/event/{eventId}")
+    public ResponseEntity<List<Result>> findResultsByEvent(@PathVariable Long eventId) {
+        List<Result> results = resultService.findResultsByEventId(eventId);
+        return ResponseEntity.ok(results);
     }
 
     @PutMapping("/{id}")

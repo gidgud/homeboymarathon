@@ -30,6 +30,10 @@ public class ResultService {
 		return resultRepository.save(result);
 	}
 
+	public List<Result> findResultsByEventId(Long eventId) {
+		return resultRepository.findByEventId(eventId);
+	}
+
 	public Result updateResult (Long id, Result result){
 		Result oldResult = resultRepository.findById(id).orElseThrow();
 

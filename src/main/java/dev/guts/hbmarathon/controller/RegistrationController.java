@@ -2,6 +2,7 @@ package dev.guts.hbmarathon.controller;
 
 import dev.guts.hbmarathon.DTO.RegistrationRequest;
 import dev.guts.hbmarathon.DTO.RegistrationResponse;
+import dev.guts.hbmarathon.model.Registration;
 import dev.guts.hbmarathon.service.RegistrationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +56,14 @@ public class RegistrationController {
 
         return ResponseEntity.ok(registrationService.findAllRegistrationsForSpecificUser(userId));
 
+    }
+
+    @GetMapping("/event/{eventId}/user/{userId}")
+    public ResponseEntity<Registration> findByEventAndUser(
+            @PathVariable Long eventId,
+            @PathVariable Long userId) {
+        Registration registration = registrationService.findByEventAndUser(eventId, userId);
+        return ResponseEntity.ok(registration);
     }
 
 }

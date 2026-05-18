@@ -6,5 +6,5 @@ import lombok.Data;
 public class ResultRequest{
         private Long eventId;
         private Long userId;
-        private String time;
+        private Long time;
 }
