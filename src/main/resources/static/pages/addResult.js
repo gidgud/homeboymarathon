@@ -25,8 +25,8 @@ function initAddResult() {
     miniTitle2.innerHTML = "Tid";
 
     const raceTime = document.createElement("input");
-    raceTime.type = "time";
-    raceTime.step = "1";
+    raceTime.type = "text";
+    raceTime.placeholder = "HH:MM:SS";
     raceTime.id = "race-time";
 
     const submitBtn = document.createElement("button");
@@ -34,10 +34,15 @@ function initAddResult() {
 
     submitBtn.addEventListener("click", async () => {
 
+        if (!selectedEventId || !selectedUserId) {
+            alert("Vælg event og deltager først");
+            return;
+        }
+
         const resultData = {
             eventId: selectedEventId,
             userId: selectedUserId,
-            time: document.getElementById("race-time").value
+            time: timeToSeconds(document.getElementById("race-time").value)
         };
 
         try {
@@ -160,4 +165,9 @@ async function filterEvents(){
 
         console.error("Grrr nu virker det ikke igen", error);
     }
+}
+
+function timeToSeconds(time) {
+    const [h, m, s] = time.split(":").map(Number);
+    return (h * 3600) + (m * 60) + s;
 }
