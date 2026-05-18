@@ -87,6 +87,10 @@ public class RegistrationService {
 
 	}
 
+	public Registration findByEventAndUser(Long eventId, Long userId) {
+		return registrationRepository.findByEventIdAndUserId(eventId, userId);
+	}
+
 
 
 

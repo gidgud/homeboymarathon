@@ -34,15 +34,24 @@ function initAddResult() {
 
     submitBtn.addEventListener("click", async () => {
 
+        console.log("CLICKED");
+
         if (!selectedEventId || !selectedUserId) {
             alert("Vælg event og deltager først");
+            return;
+        }
+
+        const timeValue = document.getElementById("race-time").value;
+
+        if (!timeValue) {
+            alert("Indtast tid");
             return;
         }
 
         const resultData = {
             eventId: selectedEventId,
             userId: selectedUserId,
-            time: timeToSeconds(document.getElementById("race-time").value)
+            time: timeToSeconds(timeValue)
         };
 
         try {
@@ -52,12 +61,18 @@ function initAddResult() {
                 body: JSON.stringify(resultData)
             });
 
-            if (response.ok) {
-                alert("Resultatet er oprettet yay! B)");
+            const text = await response.text();
+
+            if (!response.ok) {
+                console.error(text);
+                alert("Fejl ved oprettelse");
+                return;
             }
 
+            alert("Resultat oprettet!");
+
         } catch (error) {
-            console.error("Fejl:", error);
+            console.error("Fetch error:", error);
         }
     });
 
@@ -87,9 +102,9 @@ function promptEventSelection(container) {
     const eventList = document.createElement("ul");
     eventList.id = "event-list";
 
-    eventInput.addEventListener("keyup", filterEvents);
-
     container.append(eventInput, eventList);
+
+    eventInput.addEventListener("keyup", filterEvents);
 }
 
 async function filterUser() {
@@ -152,9 +167,11 @@ async function filterEvents(){
 
                 eventList.innerHTML = "";
 
-                const container = document.querySelector(".view-result-div");
+                const container = document.querySelector(".view-result-div, .add-result-div");
 
-                await createResultTable(container);
+                if (container) {
+                    await createResultTable(container);
+                }
 
             });
 
