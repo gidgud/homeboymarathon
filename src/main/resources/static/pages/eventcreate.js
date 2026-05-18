@@ -80,16 +80,37 @@ function initEventCreatePage() {
 
 async function handleCreateEvent(e) {
 	e.preventDefault();
-
 	const errorDiv = document.getElementById('create-error');
 	errorDiv.classList.add('hidden');
+
+	const fileInput = document.getElementById('event-image');
+	const file = fileInput.files[0];
+	let imagePath = '';
+
+	// Upload image first if one was selected
+	if (file) {
+		const formData = new FormData();
+		formData.append('file', file);
+
+		const imgRes = await fetch('/api/events/upload-image', {
+			method: 'POST',
+			body: formData,   // no Content-Type header — browser sets it with boundary
+		});
+
+		if (!imgRes.ok) {
+			showCreateError('Billedet kunne ikke uploades.');
+			return;
+		}
+
+		const imgData = await imgRes.json();
+		imagePath = imgData.imagePath;
+	}
 
 	const payload = {
 		name: document.getElementById('event-name').value.trim(),
 		date: document.getElementById('event-date').value,
 		address: document.getElementById('event-address').value.trim(),
-		imagePath: document.getElementById('event-image').value.trim(),
-		price: parseFloat(document.getElementById('event-price').value),
+		imagePath: imagePath,
 	};
 
 	try {
@@ -106,7 +127,6 @@ async function handleCreateEvent(e) {
 		}
 
 		showPage('event-page');
-
 	} catch (err) {
 		showCreateError('Kunne ikke oprette arrangement');
 		console.error(err);
