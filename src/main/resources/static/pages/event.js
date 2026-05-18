@@ -12,7 +12,7 @@ function initEventPage() {
         
         <div>
         
-        <select class="date-filter" id="date-filter" onchange="filterEvents()">
+        <select class="date-filter" id="date-filter" onchange="filterEventsEventPage()">
         
         <option value="upcoming">Kommende events</option>
         <option value="past">Tidligere events</option>
@@ -29,8 +29,8 @@ function initEventPage() {
     
     `
 
-    //Kører filterEvents for at få et filtreret array af events afhængigt at brugerens valg i dropdown menuen.
-    filterEvents();
+    //Kører filterEventsEventPage for at få et filtreret array af events afhængigt at brugerens valg i dropdown menuen.
+    filterEventsEventPage();
 
 }
 
@@ -156,7 +156,7 @@ async function fetchEvents() {
 }
 
 //Script til at filtrere events efter tidspunkt
-async function filterEvents() {
+async function filterEventsEventPage() {
 
     const dateFilter = document.getElementById("date-filter").value;
     const dateNow = new Date();
