@@ -1,40 +1,44 @@
 function initPaymentPage() {
 	const page = document.getElementById("payment-page");
-
 	page.innerHTML = `
-    <h2>Betal for tilmelding</h2>
-    <form id="payment-form">
-      <label>Registrering ID</label>
-      <input type="number" id="payment-registration-id" value="${registrationId ?? ''}" required>
- 
-      <label>Kortholder navn</label>
-      <input type="text" id="payment-card-holder" placeholder="Navn på kort" required>
- 
-      <label>Kortnummer</label>
-      <input type="text" id="payment-card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
- 
-      <label>Udløbsdato</label>
-      <input type="text" id="payment-expiry" placeholder="MM/ÅÅ" maxlength="5" required>
- 
-      <label>CVV</label>
-      <input type="text" id="payment-cvv" placeholder="123" maxlength="4" required>
- 
-      <label>Beløb</label>
-      <input type="number" id="payment-amount" placeholder="0.00" step="0.01" required>
- 
-      <label>Valuta</label>
-      <select id="payment-currency">
-        <option value="DKK">DKK</option>
-        <option value="EUR">EUR</option>
-        <option value="USD">USD</option>
-      </select>
- 
-      <button type="submit">Betal nu</button>
-      <p id="payment-error" style="color:red; display:none;"></p>
-    </form>
-  `;
+        <h2>Betal for tilmelding</h2>
+        <form id="payment-form">
+            <label>Registrering ID</label>
+            <input type="number" id="payment-registration-id" required>
 
+            <label>Kortholder navn</label>
+            <input type="text" id="payment-card-holder" placeholder="Navn på kort" required>
+
+            <label>Kortnummer</label>
+            <input type="text" id="payment-card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
+
+            <label>Udløbsdato</label>
+            <input type="text" id="payment-expiry" placeholder="MM/ÅÅ" maxlength="5" required>
+
+            <label>CVV</label>
+            <input type="text" id="payment-cvv" placeholder="123" maxlength="4" required>
+
+            <label>Beløb</label>
+            <input type="number" id="payment-amount" placeholder="0.00" step="0.01" required>
+
+            <label>Valuta</label>
+            <select id="payment-currency">
+                <option value="DKK">DKK</option>
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+            </select>
+
+            <button type="submit">Betal nu</button>
+            <p id="payment-error" style="color:red; display:none;"></p>
+        </form>
+    `;
 	document.getElementById('payment-form').addEventListener('submit', handlePayment);
+}
+
+// Called after initPaymentPage, fills in the values
+function showPaymentForm(registrationId, price) {
+	document.getElementById('payment-registration-id').value = registrationId;
+	document.getElementById('payment-amount').value = price;
 }
 
 async function handlePayment(e) {
