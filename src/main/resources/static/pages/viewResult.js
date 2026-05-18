@@ -1,7 +1,9 @@
+let selectedUserId = null;
+let selectedEventId = null;
+
 async function initViewResult() {
 
     const page = document.getElementById("view-result-page");
-
     page.innerHTML = "";
 
     const container = document.createElement("div");
@@ -10,21 +12,25 @@ async function initViewResult() {
     const title = document.createElement("h2");
     title.innerHTML = "Resultatliste";
 
+
+
     container.appendChild(title);
+
+    promptEventSelection(container);
+
     page.appendChild(container);
-
-    promptEventSelection();
-
-    filterEvents();
-
-    await createResultTable();
-
 }
 
-async function createResultTable() {
+
+async function createResultTable(container) {
+
+    if (!selectedEventId) return;
 
     const results = await fetchResultsForEvent(selectedEventId);
     const registratedDistance = await fetchDistanceForRegistration(selectedEventId);
+
+    const old = document.getElementById("results-table");
+    if (old) old.remove();
 
     const resultTable = document.createElement("table");
     resultTable.id = "results-table";
@@ -67,8 +73,7 @@ async function createResultTable() {
 
     });
 
-    document.getElementById("view-result-page").appendChild(resultTable);
-
+    container.appendChild(resultTable);
 }
 
 async function fetchResultsForEvent(eventId) {
