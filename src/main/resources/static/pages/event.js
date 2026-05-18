@@ -29,13 +29,83 @@ function initEventPage() {
     
     `
 
-    //Kører filterEventsEventPage for at få et filtreret array af events afhængigt at brugerens valg i dropdown menuen.
-    filterEventsEventPage();
+	//Kører filterEventsEventPage for at få et filtreret array af events afhængigt at brugerens valg i dropdown menuen.
+	filterEventsEventPage();
 
 }
 
-//Script til at rendere events på siden.
 async function renderEvents(eventArray) {
+	const user = JSON.parse(localStorage.getItem("loggedInUser"));
+	const isLoggedIn = !!user;
+	const dateNow = new Date();
+
+	// Only fetch registrations if logged in
+	const registeredEventIds = isLoggedIn
+		? await fetch(`http://localhost:8080/api/registrations/user/${user.id}`)
+			.then(r => r.json())
+			.then(regs => regs.map(r => r.eventId))
+		: [];
+
+	const grid = document.querySelector("#event-grid");
+	grid.innerHTML = "";
+
+	eventArray.forEach(event => {
+		const isRegistered = registeredEventIds.includes(event.id);
+		const isPastEvent = new Date(event.date) < dateNow;
+
+		const card = document.createElement("div");
+		card.classList.add("event-card");
+
+		const formattedDate = new Date(event.date).toLocaleString("da-DK", {
+			day: "numeric", month: "long", year: "numeric",
+			hour: "2-digit", minute: "2-digit"
+		});
+
+		card.innerHTML = `
+            <div class="image-container">
+                <img src="${event.imagePath}" class="event-image" alt="løberute">
+                <div class="event-information">
+                    <div class="event-information-top">
+                        <span class="event-information-name">${event.name}</span>
+                    </div>
+                    <div class="event-information-bottom">
+                        <div class="event-information-bottom-left">
+                            <span class="event-date">Dato: ${formattedDate}</span>
+                            <span class="event-address">Adresse: ${event.address}</span>
+                        </div>
+                        <div class="event-information-bottom-right">
+                            ${isPastEvent ? "" : `
+                                ${isRegistered ? "" : `
+                                    <select class="race-type-drop-down" id="raceType-${event.id}">
+                                        <option value="undefined">Vælg distance</option>
+                                        <option value="marathon">Marathon - 50 kr.</option>
+                                        <option value="half-marathon">Halv Marathon - 30 kr.</option>
+                                    </select>
+                                `}
+                                <button 
+                                    class="${isRegistered ? "registered-button" : "sign-up-button"}"
+                                    id="sign-up-button-${event.id}"
+                                    ${!isLoggedIn ? 'disabled title="Log ind for at tilmelde dig"' : ''}
+                                >
+                                    ${isRegistered ? "Tilmeldt" : "Tilmeld"}
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+		const signUpButton = card.querySelector(".sign-up-button");
+		if (signUpButton) {
+			signUpButton.addEventListener("click", () => registerForEvent(event.id));
+		}
+
+		grid.appendChild(card);
+	});
+}
+//Script til at rendere events på siden.
+/*async function renderEvents(eventArray) {
 
 	//Definerer user, så man kan finde userId for brugeren, der er logget ind.
 	const user = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -78,57 +148,57 @@ async function renderEvents(eventArray) {
 		//Definerer hvad hver event div skal indeholde
 		card.innerHTML = `
 
-            <div class="image-container">
-            
-                <img src="${event.imagePath}" class="event-image" alt="løberute">
-                
-                <div class="event-information">
-                
-                <div class="event-information-top">
-                
-                <span class="event-information-name">${event.name}</span>
-                
-                </div>
-                
-                <div class="event-information-bottom">
-                  
-                <div class="event-information-bottom-left">
-                
-                <span class="event-date">Dato: ${formattedDate}</span>
-                <span class="event-address">Adresse: ${event.address}</span>
-                
-                </div>
-                
-                <div class="event-information-bottom-right">
-                
-                ${isPastEvent ? "" : `
-                ${isRegistered ? "" : `
-                <select class="race-type-drop-down" id="raceType-${event.id}">
-                
-                <option value="undefined" >Vælg distance</option>
-                <option value="marathon">Marathon - 50 kr.</option>
-                <option value="half-marathon">Halv Marathon - 30 kr.</option>
-                
-                </select>
-                `}
-                
-                
-                <button class="${isRegistered ? "registered-button" : "sign-up-button"}"  id="sign-up-button-${event.id}"  
-                >
-                ${isRegistered ? "Tilmeldt" : "Tilmeld"}
-                </button>
-                
-                `}
-                
-                </div>
-                
-                </div>
-                
-                </div>
-                
-            </div>    
+	    <div class="image-container">
+	    
+		<img src="${event.imagePath}" class="event-image" alt="løberute">
+	        
+		<div class="event-information">
+	        
+		<div class="event-information-top">
+	        
+		<span class="event-information-name">${event.name}</span>
+	        
+		</div>
+	        
+		<div class="event-information-bottom">
+		  
+		<div class="event-information-bottom-left">
+	        
+		<span class="event-date">Dato: ${formattedDate}</span>
+		<span class="event-address">Adresse: ${event.address}</span>
+	        
+		</div>
+	        
+		<div class="event-information-bottom-right">
+	        
+		${isPastEvent ? "" : `
+		${isRegistered ? "" : `
+		<select class="race-type-drop-down" id="raceType-${event.id}">
+	        
+		<option value="undefined" >Vælg distance</option>
+		<option value="marathon">Marathon - 50 kr.</option>
+		<option value="half-marathon">Halv Marathon - 30 kr.</option>
+	        
+		</select>
+		`}
+	        
+	        
+		<button class="${isRegistered ? "registered-button" : "sign-up-button"}"  id="sign-up-button-${event.id}"  
+		>
+		${isRegistered ? "Tilmeldt" : "Tilmeld"}
+		</button>
+	        
+		`}
+	        
+		</div>
+	        
+		</div>
+	        
+		</div>
+	        
+	    </div>    
     
-            `;
+	    `;
 
 		const signUpButton = card.querySelector(".sign-up-button");
 
@@ -146,6 +216,7 @@ async function renderEvents(eventArray) {
 
 
 }
+*/
 
 //Henter events med fetch fra backend gennem end point. Man renderer herefter den hentede data.
 async function fetchEvents() {
