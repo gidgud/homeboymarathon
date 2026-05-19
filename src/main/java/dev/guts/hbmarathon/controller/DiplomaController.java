@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/diplomas")
@@ -41,6 +42,21 @@ public class DiplomaController {
         return ResponseEntity.ok(diploma);
     }
 
+    @GetMapping("/files")
+    public ResponseEntity<List<String>> getDiplomaFiles() throws IOException {
+        Path uploadDir = Paths.get("uploads/diplomas/");
+
+        if (!Files.exists(uploadDir)) {
+            return ResponseEntity.ok(List.of());
+        }
+
+        List<String> filePaths = Files.list(uploadDir)
+                .map(path -> "/uploads/diplomas/" + path.getFileName().toString())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(filePaths);
+    }
+
     @PostMapping("/upload-image")
     public ResponseEntity<Map<String, String>> uploadImage(
             @RequestParam("file") MultipartFile file) throws IOException {
@@ -56,11 +72,23 @@ public class DiplomaController {
 
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDiploma (@PathVariable Long id) {
 
         diplomaService.deleteDiploma(id);
 
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/files/{filename}")
+    public ResponseEntity<Void> deleteDiplomaFile(@PathVariable String filename) throws IOException {
+        Path filePath = Paths.get("uploads/diplomas/" + filename);
+
+        if (!Files.exists(filePath)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Files.delete(filePath);
         return ResponseEntity.noContent().build();
     }
 

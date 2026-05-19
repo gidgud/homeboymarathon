@@ -9,7 +9,7 @@ function initEventPage() {
 	//Dropdown menu til filtrering efter kommende og tidligere events.
 
 	page.innerHTML = `
-        
+    	    
         <div>
         
         <select class="date-filter" id="date-filter" onchange="filterEventsEventPage()">

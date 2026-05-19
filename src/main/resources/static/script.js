@@ -12,6 +12,7 @@ function showPage(name) {
   	if (name === 'add-result-page') initAddResult();
   	if (name === 'view-result-page') initViewResult();
 	  if (name === 'admin-diploma-page') initAdminDiploma();
+	  if (name === 'view-diploma-page') initViewDiplomas();
 }
 
 function updateNav() {
