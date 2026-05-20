@@ -1,0 +1,42 @@
+/*
+        ADD RESULTS
+ */
+
+.add-result-div {
+    margin-top: 40px;
+}
+
+.add-result-div h2 {
+    text-align: center;
+}
+
+.result-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: start;
+    margin-left: 375px;
+    align-items: end;
+}
+
+.result-info-user,
+.result-info-time {
+    margin-left: 50px;
+}
+
+.result-info button {
+    border-radius: 8px;
+    height: 30px;
+    width: 150px;
+}
+
+/*
+        VIEW RESULTS
+ */
+.view-result-div {
+    margin-top: 40px;
+}
+
+.view-result-div h2 {
+    text-align: center;
+}
+
