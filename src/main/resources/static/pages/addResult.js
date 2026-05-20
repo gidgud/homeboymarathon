@@ -78,7 +78,7 @@ function initAddResult() {
 
     container.appendChild(title);
 
-    promptEventSelection(container);
+    promptEventSelection(container, "add-event-dropdown", "add-event-list");
 
     container.append(
         miniTitle1,
@@ -92,15 +92,14 @@ function initAddResult() {
     page.appendChild(container);
 }
 
-function promptEventSelection(container) {
-
+function promptEventSelection(container, inputId = "event-dropdown", listId = "event-list") {
     const eventInput = document.createElement("input");
     eventInput.type = "text";
     eventInput.placeholder = "Indtast dato";
-    eventInput.id = "event-dropdown";
+    eventInput.id = inputId;
 
     const eventList = document.createElement("ul");
-    eventList.id = "event-list";
+    eventList.id = listId;
 
     container.append(eventInput, eventList);
 
@@ -141,10 +140,11 @@ async function filterUser() {
     }
 }
 
-async function filterEvents(){
-    const searchInput = document.getElementById("event-dropdown");
-    const eventList = document.getElementById("event-list");
-    const query = searchInput.value;
+
+async function filterEvents(e) {
+        const searchInput = e.target;
+        const eventList = searchInput.nextElementSibling;
+        const query = searchInput.value;
 
     try {
 
@@ -160,19 +160,17 @@ async function filterEvents(){
             li.textContent = `${event.name} (${event.date})`;
 
             li.addEventListener("click", async() => {
-
                 searchInput.value = li.textContent;
-
                 selectedEventId = event.id;
-
                 eventList.innerHTML = "";
 
-                const container = document.querySelector(".view-result-div, .add-result-div");
+                const viewPage = document.getElementById("view-result-page");
+                const isViewPage = !viewPage.classList.contains("hidden");
 
-                if (container) {
-                    await createResultTable(container);
+                if (isViewPage) {
+                    const container = document.querySelector(".view-result-div");
+                    if (container) await createResultTable(container);
                 }
-
             });
 
             eventList.appendChild(li);
