@@ -3,7 +3,7 @@ function initAdminDiploma() {
     page.innerHTML = "";
 
     const container = document.createElement("div");
-    container.className = "admin-diploma-div";
+    container.className = "upload-diploma-div";
 
     const title = document.createElement("h2");
     title.innerHTML = "Administrer diplomer";
@@ -14,15 +14,22 @@ function initAdminDiploma() {
     const uploadInput = document.createElement("input");
     uploadInput.type = "file";
     uploadInput.id = "diploma-file";
+    uploadInput.style.display = "none";
+
+    const fileLabel = document.createElement("label");
+    fileLabel.htmlFor = "diploma-file";
+    fileLabel.innerHTML = "Vælg fil";
+    fileLabel.className = "file-label";
 
     const submitBtn = document.createElement("button");
     submitBtn.innerHTML = "Upload";
     submitBtn.addEventListener("click", uploadDiploma);
 
-    buttonContainer.append(uploadInput, submitBtn);
+    buttonContainer.append(uploadInput, fileLabel, submitBtn);
 
     const listTitle = document.createElement("h2");
     listTitle.innerHTML = "Uploadede diplomer";
+    listTitle.className = "upload-list-title";
 
     const list = document.createElement("div");
     list.className = "diploma-list";

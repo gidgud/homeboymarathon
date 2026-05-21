@@ -590,28 +590,89 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* ── Diploma ── */
+/* ── View ── */
+
+
+.admin-diploma-div h2 {
+    font-size: 3rem;
+}
+
 
 .admin-diploma-div {
     text-align: center;
 }
 
 .diploma-row {
-    margin-bottom: 0.75rem;
+    margin-bottom: 5rem;
 }
 
-.diploma-list {
+.admin-diploma-div .diploma-list {
     margin-top: 80px;
+    border-top: 3px solid #ccc;
+    padding-top: 40px;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .diploma-link {
     display: block;
-    font-size: 1.1rem;
+    font-size: 2rem;
     font-weight: bold;
     color: black;
     text-decoration: none;
+    margin-bottom: 1.25rem;
 }
 
 .diploma-link:hover {
     color: #e8500a;
 }
 
+/* ── Diploma ── */
+/* ── Add ── */
+
+.upload-diploma-div h2 {
+    font-size: 3rem;
+}
+
+.upload-diploma-div {
+    text-align: center;
+    padding-top: 40px;
+}
+
+.upload-diploma-div .btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.upload-diploma-div .btn-container button {
+    background: none;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.upload-diploma-div .btn-container button:hover {
+    color: #e8500a;
+}
+
+.file-label {
+    padding: 6px 80px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #f0f0f0;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.upload-list-title {
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+    width: 50%;
+    margin: 20px auto 10px;
+}
