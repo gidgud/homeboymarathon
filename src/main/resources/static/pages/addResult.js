@@ -6,6 +6,15 @@ function initAddResult() {
     const container = document.createElement("div");
     container.className = "add-result-div";
 
+    const infoContainer = document.createElement("div");
+    infoContainer.className = "result-info";
+
+    const infoUser = document.createElement("div");
+    infoUser.className = "result-info-user"
+
+    const infoTime = document.createElement("div");
+    infoTime.className = "result-info-time"
+
     const title = document.createElement("h2");
     title.innerHTML = "Tilføj resultat";
 
@@ -76,18 +85,16 @@ function initAddResult() {
         }
     });
 
+    infoUser.append(miniTitle1, userDropdown, userList);
+    infoTime.append(miniTitle2, raceTime);
+
+    infoContainer.append(infoUser, infoTime, submitBtn);
+
     container.appendChild(title);
 
     promptEventSelection(container, "add-event-dropdown", "add-event-list");
 
-    container.append(
-        miniTitle1,
-        userDropdown,
-        userList,
-        miniTitle2,
-        raceTime,
-        submitBtn
-    );
+    container.appendChild(infoContainer)
 
     page.appendChild(container);
 }
