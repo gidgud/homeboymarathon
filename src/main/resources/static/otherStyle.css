@@ -1,12 +1,14 @@
 /*
-        ADD RESULTS
+        ADD/VIEW RESULTS
  */
 
-.add-result-div {
+.add-result-div,
+.view-result-div{
     margin-top: 40px;
 }
 
-.add-result-div h2 {
+.add-result-div h2,
+.view-result-div h2{
     text-align: center;
 }
 
@@ -15,7 +17,6 @@
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: start;
     margin-left: 375px;
-    align-items: end;
 }
 
 .result-info-user,
@@ -23,20 +24,113 @@
     margin-left: 50px;
 }
 
+.result-info-user,
+.add-result-div {
+    position: relative;
+}
+
 .result-info button {
     border-radius: 8px;
     height: 30px;
     width: 150px;
+    margin-top: 56px;
+}
+
+#add-event-dropdown,
+#view-event-dropdown{
+    margin-left: 40px;
+}
+
+#user-list,
+#add-event-list,
+#view-event-list{
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /*border: 1px solid #ccc;*/
+    padding: 0;
+    margin: 0;
+
+    list-style: none;
+    background: white;
+
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+
+#add-event-list,
+#view-event-list{
+    max-width: 170px;
+    margin-left: 40px;
+
+}
+
+#user-list li,
+#add-event-list li,
+#view-event-list li{
+    padding: 10px;
+    cursor: pointer;
+    font-size: smaller;
+    display: ruby-text;
+}
+
+#user-list li:hover,
+#add-event-list li:hover,
+#view-event-list li:hover{
+    background-color: #f0f0f0;
 }
 
 /*
-        VIEW RESULTS
+        VIEW RESULTS TABLE
  */
-.view-result-div {
-    margin-top: 40px;
+
+#results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
 }
 
-.view-result-div h2 {
-    text-align: center;
+#results-table .header-row,
+#results-table tr{
+    border-bottom: 2px solid #cfcfcf;
 }
 
+#results-table th {
+    text-align: left;
+    padding: 12px 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+}
+
+#results-table td {
+    padding: 14px 8px;
+    font-size: 15px;
+    color: #222;
+}
+
+/* Column widths */
+#results-table th:nth-child(1),
+#results-table td:nth-child(1) {
+    width: 140px;
+}
+
+#results-table th:nth-child(2),
+#results-table td:nth-child(2) {
+    width: 400px;
+}
+
+#results-table th:nth-child(3),
+#results-table td:nth-child(3),
+#results-table th:nth-child(4),
+#results-table td:nth-child(4) {
+    width: 120px;
+    text-align: right;
+}
+
+#results-table .result-row:hover {
+    background-color: #f7f7f7;
+}
