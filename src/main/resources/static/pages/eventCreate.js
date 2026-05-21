@@ -6,7 +6,7 @@ function initEventCreatePage() {
 
     <!-- Form box -->
     <div class="create-container">
-      <h1>Opret arrangement</h1>
+      <h2>Opret arrangement</h2>
       <form id="create-event-form">
         <div class="form-group">
           <label for="event-name">Navn</label>
