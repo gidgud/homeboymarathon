@@ -1,3 +1,11 @@
+let currentUser = null;
+
+document.querySelectorAll('nav button[data-role]').forEach(btn => {
+	btn.style.display = 'none';
+});
+
+updateNav();
+
 function showPage(name) {
 
 	document.querySelectorAll('.page').forEach(a => a.classList.add('hidden'));
@@ -9,31 +17,48 @@ function showPage(name) {
 	if (name === 'event-create-page') initEventCreatePage();
 	if (name === 'edit-user-page') initEditUser();
 	if (name === 'payment-page') initPaymentPage();
-  if (name === 'add-result-page') initAddResult();
-  if (name === 'view-result-page') initViewResult();
+	if (name === 'add-result-page') initAddResult();
+	if (name === 'view-result-page') initViewResult();
 
 
 }
 
-function updateNav() {
+async function updateNav() {
+
 
 	const loginBtn = document.getElementById("login-btn");
-
 	const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
 	if (user) {
-
-		loginBtn.innerHTML = user.firstName;
-
-		loginBtn.onclick = () => toggleUserMenu();
+		try {
+			const response = await fetch(`http://localhost:8080/api/users/isAdmin/${user.id}`);
+			if (!response.ok) throw new Error("User not found");
+			const isAdmin = await response.json();
+			currentUser = { id: user.id, isAdmin: isAdmin };
+			loginBtn.innerHTML = user.firstName;
+			loginBtn.onclick = () => toggleUserMenu();
+		} catch {
+			// User no longer exists in DB — clear localStorage
+			localStorage.removeItem("loggedInUser");
+			currentUser = null;
+			loginBtn.innerHTML = "Login";
+			loginBtn.onclick = () => showPage("login-page");
+		}
 
 	} else {
-
+		currentUser = null;
 		loginBtn.innerHTML = "Login";
-
 		loginBtn.onclick = () => showPage("login-page");
-
 	}
+
+	document.querySelectorAll('nav button[data-role]').forEach(btn => {
+		const required = btn.dataset.role;
+		if (required === 'admin') {
+			btn.style.display = currentUser?.isAdmin === true ? '' : 'none';
+		} else if (required === 'logged-in') {
+			btn.style.display = currentUser !== null ? '' : 'none';
+		}
+	});
 }
 
 function toggleUserMenu() {
@@ -91,7 +116,18 @@ function toggleUserMenu() {
 		}
 
 	});
-	dropdownContainer.append(editUser, deleteUser);
+
+	const logoutUser = document.createElement("button");
+	logoutUser.innerText = "Log ud";
+	logoutUser.onclick = () => {
+		localStorage.removeItem("loggedInUser");
+		currentUser = null;
+		dropdownContainer.remove();
+		updateNav();
+		showPage("front-page");
+	};
+
+	dropdownContainer.append(editUser, deleteUser, logoutUser);
 
 	loginBtn.appendChild(dropdownContainer);
 

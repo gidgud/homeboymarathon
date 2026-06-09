@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import dev.guts.hbmarathon.service.UserService;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 
@@ -17,6 +16,14 @@ public class UserController {
 
 	public UserController(UserService userService) {
 		this.userService = userService;
+	}
+
+	@PostMapping("/create-admin")
+	public ResponseEntity<User> createAdmin(@RequestBody User user) {
+		user.setIsAdmin(true);
+
+		User newAdmin = userService.createUser(user);
+		return ResponseEntity.ok(newAdmin);
 	}
 
 	@PostMapping
@@ -60,6 +67,12 @@ public class UserController {
 		return ResponseEntity.noContent().build();
 
 	}
+
+	@GetMapping("/isAdmin/{id}")
+	public ResponseEntity<Boolean> isAdmin(@PathVariable Long id) {
+		return ResponseEntity.ok(userService.isAdmin(id));
+	}
+
 
 
 }

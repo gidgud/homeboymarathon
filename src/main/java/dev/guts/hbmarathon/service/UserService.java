@@ -56,4 +56,20 @@ public class UserService {
         userRepository.delete(user);
     }
 
+	public boolean isAdmin(Long userId) {
+
+		User user = userRepository.findById(userId).orElseThrow();
+
+	
+		if(user.getIsAdmin()) {
+
+			return true;
+		}
+
+		return false;
+
+
+
+	}
+
 }
