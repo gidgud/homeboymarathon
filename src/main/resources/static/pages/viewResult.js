@@ -1,5 +1,7 @@
 async function initViewResult() {
 
+    selectedEventId = null;
+
     const page = document.getElementById("view-result-page");
     page.innerHTML = "";
 
@@ -12,9 +14,13 @@ async function initViewResult() {
 
     container.appendChild(title);
 
-    promptEventSelection(container);
+    promptEventSelection(container, "view-event-dropdown", "view-event-list");
 
     page.appendChild(container);
+
+    if (selectedEventId) {
+        await createResultTable(container);
+    }
 }
 
 
@@ -71,6 +77,8 @@ async function createResultTable(container) {
     }
 
     container.appendChild(resultTable);
+    console.log("Tabel appendet til:", container);
+    console.log("Tabel indhold:", resultTable.innerHTML);
 }
 
 async function fetchResultsForEvent(eventId) {
