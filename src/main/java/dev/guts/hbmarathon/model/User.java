@@ -37,4 +37,6 @@ public class User {
 	private LocalDate dateOfBirth;
 
 	private String phoneNumber;
+
+	private Boolean isAdmin;
 }

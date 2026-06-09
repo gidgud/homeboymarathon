@@ -22,11 +22,12 @@
 	<nav>
 		<button onclick="showPage('front-page')"> Forside </button>
 		<button onclick="showPage('event-page')"> Datoer </button>
-		<button onclick="showPage('add-result-page')"> Tilføj resultat </button>
+		<button onclick="showPage('participant-page')"> Deltagerliste </button>
+		<button data-role="admin" onclick="showPage('add-result-page')"> Tilføj resultat </button>
 		<button onclick="showPage('view-result-page')"> Resultatliste </button>
-		<button onclick="showPage('view-diploma-page')"> Diplom </button>
-		<button onclick="showPage('admin-diploma-page')">Upload</button>
-		<button onclick="showPage('event-create-page')"> Opret Event</button>
+		<button onclick="showPage('admin-diploma-page')"> Diplom </button>
+		<button data-role="admin" onclick="showPage('event-create-page')"> Opret Event</button>
+
 		<button id="login-btn" class="right-btn" onclick="showPage('login-page')"> Login </button>
 	</nav>
 
